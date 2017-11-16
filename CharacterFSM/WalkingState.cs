@@ -6,6 +6,7 @@ namespace CharacterState
 
         public WalkingState(Character player) : base(player)
         {
+            GD.print("Walking" + "State");
         }
 
         public override BaseState handleEvent(InputEvent ev)
@@ -50,7 +51,10 @@ namespace CharacterState
             Vector3 computedDirection = (player.movementVector.rotated(new Vector3(0, 1, 0), player.GetRotation().y)).normalized() * walkSpeed * dt;
             
             player.MoveAndSlide(computedDirection, new Vector3(0, 1, 0), 1f, 4, Mathf.PI / 4);
-
+            if (player.movementVector.z == 0 && player.movementVector.x == 0)
+            {
+                return new StandingState(player);
+            }
             //If the player isn't colliding with anything, change to falling state
             return player.MoveAndCollide(computedGravity) == null ? new FallingState(player) : null;
         }

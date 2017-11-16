@@ -7,6 +7,7 @@ namespace CharacterState
 
         public StandingState(Character player) : base(player)
         {
+            GD.print("Standing" + "State");
         }
 
         public override BaseState handleEvent(InputEvent ev)
