@@ -1,88 +1,23 @@
 using Godot;
+using CharacterState;
 
 public class Character : KinematicBody {
+	
+	public Camera viewCamera = new Camera();
+	public Vector3 movementVector = new Vector3();
+    public float verticalVelocity = 0;
 
-	public const float mouselookSensitivity = 0.005f;
-	public const float gravity = 9.8f;
-	public const float jumpHeight = 5f;
-	public const float runMultiplier = 3f;
-	public const float walkSpeed = 100f;
 
-	private Camera characterCamera = new Camera();
-	private Vector3 movementVector = new Vector3();
-
-	private enum STATE {
-		STANDING,
-		WALKING,
-		RUNNING,
-		FALLING,
-		CROUCHING,
-		CROUCHWALKING,
-		CLIMBING
-	}
-
-	private STATE currentState = STATE.STANDING;
-	private float verticalVelocity = 0;
+    private BaseState currentState;
 
 	public override void _Ready() {
 		Input.SetMouseMode(Input.MOUSE_MODE_CAPTURED);
-
-		AddChild(characterCamera);
+		currentState = new StandingState(this);
+		AddChild(viewCamera);
 	}
 
 	public override void _Input(InputEvent ev) {
-		if (ev is InputEventMouseMotion) {
-			Vector2 motion = -((InputEventMouseMotion) ev).GetRelative();
-			RotateY(motion.x * mouselookSensitivity);
-
-			float xrot = Mathf.max(Mathf.min(motion.y * mouselookSensitivity + characterCamera.GetRotation().x, Mathf.PI / 2), -Mathf.PI / 2);
-			characterCamera.SetRotation(new Vector3(xrot,0,0));
-		}
-		else {
-			//Clamp axis to prevent weird movement
-			movementVector.z = Mathf.min(1, Mathf.max(-1, movementVector.z));
-			movementVector.x = Mathf.min(1, Mathf.max(-1, movementVector.x));
-
-			if (ev.IsActionPressed("character_forward") || ev.IsActionReleased("character_backward")) {
-				movementVector.z--; 
-			}
-			else if (ev.IsActionReleased("character_forward") || ev.IsActionPressed("character_backward")) {
-				movementVector.z++;
-			}
-			else if (ev.IsActionPressed("character_strafe_right") || ev.IsActionReleased("character_strafe_left")) {
-				movementVector.x++;
-			}
-			else if (ev.IsActionReleased("character_strafe_right") || ev.IsActionPressed("character_strafe_left")) {
-				movementVector.x--;
-			}
-			else if (ev.IsActionPressed("character_jump")) {
-				bool inJumpableState = 
-					currentState == STATE.STANDING || 
-					currentState == STATE.WALKING || 
-					currentState == STATE.RUNNING;
-
-				if (inJumpableState) {
-					verticalVelocity = jumpHeight;
-				}
-			}
-			else if (ev.IsActionPressed("character_run")) {
-				bool canRun = 
-					currentState == STATE.WALKING ||
-					currentState == STATE.STANDING;
-				
-				if (canRun) {
-					currentState = STATE.RUNNING;
-				}
-			}
-			else if (ev.IsActionReleased("character_run")) {
-				bool changeToWalk = 
-					currentState == STATE.RUNNING;
-
-				if (changeToWalk) {
-					currentState = STATE.WALKING;
-				}
-			}
-		}
+		
 	}
 
 	public override void _PhysicsProcess(float dt) {
