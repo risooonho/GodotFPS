@@ -1,15 +1,14 @@
 using Godot;
 namespace CharacterState
 {
-    public class FallingState : BaseState
+    public class FallingState : AbstractState
     {
-
         public FallingState(Character player) : base(player)
         {
             GD.print("Falling" + "State");
         }
 
-        public override BaseState handleEvent(InputEvent ev)
+        public override AbstractState handleEvent(InputEvent ev)
         {
             base.handleEvent(ev);
             //Clamp axis to prevent weird movement
@@ -33,18 +32,28 @@ namespace CharacterState
                 player.movementVector.x--;
             }
 
-            return null;
+            return this;
         }
 
-        public override BaseState physicsProcess(float dt)
+        public override AbstractState physicsProcess(float dt)
         {
             player.verticalVelocity -= gravity * dt;
             Vector3 computedGravity = new Vector3(0, (player.verticalVelocity) * dt, 0);
-            Vector3 computedDirection = (player.movementVector.rotated(new Vector3(0, 1, 0), player.GetRotation().y)).normalized() * walkSpeed * dt;
+            Vector3 computedDirection = (player.movementVector.rotated(up, player.GetRotation().y)).normalized() * walkSpeed * dt;
 
             player.MoveAndSlide(computedDirection, new Vector3(0, 1, 0), 1f, 4, Mathf.PI / 4);
-            //If the player isn't colliding with anything, change to falling state
-            return player.MoveAndCollide(computedGravity) == null ? null : new StandingState(player);
+
+            //If the player is colliding with anything, change to stationary state
+            KinematicCollision kc = player.MoveAndCollide(computedGravity);
+            if (kc == null)
+            {
+                return this;
+            }
+            else
+            {
+                player.verticalVelocity = -gravity * dt;
+                return new StandingState(player);
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
 using Godot;
 namespace CharacterState
 {
-    public abstract class BaseState
+    public abstract class AbstractState
     {
+        public Vector3 up = new Vector3(0, 1, 0);
+
         public const float mouseSensitivity = 0.005f;
         public const float gravity = 9.8f;
         public const float jumpHeight = 5f;
@@ -11,11 +13,11 @@ namespace CharacterState
 
         public Character player;
 
-        public BaseState(Character player)
+        public AbstractState(Character player)
         {
             this.player = player;
         }
-        public virtual BaseState handleEvent(InputEvent ev)
+        public virtual AbstractState handleEvent(InputEvent ev)
         {
             if (ev is InputEventMouseMotion)
             {
@@ -24,7 +26,7 @@ namespace CharacterState
             return null;
         }
 
-        public virtual BaseState physicsProcess(float dt)
+        public virtual AbstractState physicsProcess(float dt)
         {
 
             return null;

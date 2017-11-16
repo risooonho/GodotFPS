@@ -8,29 +8,19 @@ public class Character : KinematicBody {
 	public float verticalVelocity = 0;
 
 
-	private BaseState currentState;
+	private AbstractState state;
 
 	public override void _Ready() {
 		Input.SetMouseMode(Input.MOUSE_MODE_CAPTURED);
-		currentState = new StandingState(this);
+		state = new StandingState(this);
 		AddChild(viewCamera);
 	}
 
 	public override void _Input(InputEvent ev) {
-		BaseState update = currentState.handleEvent(ev);
-		if (update == null)
-		{
-			return;
-		}
-		currentState = update;
+		state = state.handleEvent(ev);
 	}
 
 	public override void _PhysicsProcess(float dt) {
-		BaseState update = currentState.physicsProcess(dt);
-		if (update == null)
-		{
-			return;
-		}
-		currentState = update;
+		state = state.physicsProcess(dt);
 	}
 }

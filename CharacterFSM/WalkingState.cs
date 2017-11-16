@@ -1,7 +1,7 @@
 using Godot;
 namespace CharacterState
 {
-    public class WalkingState : BaseState
+    public class WalkingState : AbstractState
     {
 
         public WalkingState(Character player) : base(player)
@@ -9,7 +9,7 @@ namespace CharacterState
             GD.print("Walking" + "State");
         }
 
-        public override BaseState handleEvent(InputEvent ev)
+        public override AbstractState handleEvent(InputEvent ev)
         {
             base.handleEvent(ev);
             //Clamp axis to prevent weird movement
@@ -40,23 +40,35 @@ namespace CharacterState
             {
                 return new RunningState(player);
             }
-
-            return null;
+            else if (ev.IsActionPressed("character_crouch"))
+            {
+                return new CrouchWalkingState(player);
+            }
+            return this;
         }
 
-        public override BaseState physicsProcess(float dt)
+        public override AbstractState physicsProcess(float dt)
         {
             player.verticalVelocity -= gravity * dt;
             Vector3 computedGravity = new Vector3(0, (player.verticalVelocity) * dt, 0);
-            Vector3 computedDirection = (player.movementVector.rotated(new Vector3(0, 1, 0), player.GetRotation().y)).normalized() * walkSpeed * dt;
+            Vector3 computedDirection = (player.movementVector.rotated(up, player.GetRotation().y)).normalized() * walkSpeed * dt;
             
-            player.MoveAndSlide(computedDirection, new Vector3(0, 1, 0), 1f, 4, Mathf.PI / 4);
+            player.MoveAndSlide(computedDirection, up, 1f, 4, Mathf.PI / 4);
             if (player.movementVector.z == 0 && player.movementVector.x == 0)
             {
                 return new StandingState(player);
             }
-            //If the player isn't colliding with anything, change to falling state
-            return player.MoveAndCollide(computedGravity) == null ? new FallingState(player) : null;
+
+            KinematicCollision kc = player.MoveAndCollide(computedGravity);
+            if (kc != null)
+            {
+                player.verticalVelocity = -gravity;
+                return this;
+            }
+            else
+            {
+                return new FallingState(player);
+            }
         }
     }
 }

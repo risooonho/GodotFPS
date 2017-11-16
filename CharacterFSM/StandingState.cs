@@ -1,7 +1,7 @@
 using Godot;
 namespace CharacterState
 {
-    public class StandingState : BaseState
+    public class StandingState : AbstractState
     {
         private bool nextMovementIsRun = false;
 
@@ -10,7 +10,7 @@ namespace CharacterState
             GD.print("Standing" + "State");
         }
 
-        public override BaseState handleEvent(InputEvent ev)
+        public override AbstractState handleEvent(InputEvent ev)
         {
             base.handleEvent(ev);
             //Clamp axis to prevent weird movement
@@ -20,22 +20,22 @@ namespace CharacterState
             if (ev.IsActionPressed("character_forward") || ev.IsActionReleased("character_backward"))
             {
                 player.movementVector.z--;
-                return nextMovementIsRun ? (BaseState) new RunningState(player) : new WalkingState(player);
+                return nextMovementIsRun ? (AbstractState) new RunningState(player) : new WalkingState(player);
             }
             else if (ev.IsActionReleased("character_forward") || ev.IsActionPressed("character_backward"))
             {
                 player.movementVector.z++;
-                return nextMovementIsRun ? (BaseState)new RunningState(player) : new WalkingState(player);
+                return nextMovementIsRun ? (AbstractState)new RunningState(player) : new WalkingState(player);
             }
             else if (ev.IsActionPressed("character_strafe_right") || ev.IsActionReleased("character_strafe_left"))
             {
                 player.movementVector.x++;
-                return nextMovementIsRun ? (BaseState)new RunningState(player) : new WalkingState(player);
+                return nextMovementIsRun ? (AbstractState)new RunningState(player) : new WalkingState(player);
             }
             else if (ev.IsActionReleased("character_strafe_right") || ev.IsActionPressed("character_strafe_left"))
             {
                 player.movementVector.x--;
-                return nextMovementIsRun ? (BaseState)new RunningState(player) : new WalkingState(player);
+                return nextMovementIsRun ? (AbstractState)new RunningState(player) : new WalkingState(player);
             }
             else if (ev.IsActionPressed("character_jump"))
             {
@@ -49,16 +49,33 @@ namespace CharacterState
             {
                 nextMovementIsRun = false;
             }
-                
-            return null;
+            else if (ev.IsActionPressed("character_crouch"))
+            {
+                return new CrouchingState(player);
+            }
+            return this;
         }
 
-        public override BaseState physicsProcess(float dt)
+        public override AbstractState physicsProcess(float dt)
         {
             player.verticalVelocity -= gravity * dt;
             Vector3 computedGravity = new Vector3(0, (player.verticalVelocity) * dt, 0);
+
+            if (player.movementVector.x != 0 || player.movementVector.z != 0)
+            {
+                return nextMovementIsRun ? (AbstractState)new RunningState(player) : new WalkingState(player);
+            }
+
             KinematicCollision kc = player.MoveAndCollide(computedGravity);
-            return kc == null ? new FallingState(player) : null;
+            if (kc != null)
+            {
+                player.verticalVelocity = -gravity;
+                return this;
+            }
+            else
+            {
+                return new FallingState(player);
+            }
         }
     }
 }

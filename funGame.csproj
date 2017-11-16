@@ -49,7 +49,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterFSM\BaseState.cs" />
+    <Compile Include="CharacterFSM\AbstractBaseState.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharacterFSM\ClimbingState.cs" />
     <Compile Include="CharacterFSM\CrouchingState.cs" />

@@ -1,15 +1,15 @@
 using Godot;
 namespace CharacterState {
-    public class ClimbingState : BaseState {
+    public class ClimbingState : AbstractState {
 
         public ClimbingState(Character player) : base(player) {
         }
 
-        public override BaseState handleEvent(InputEvent ev) {
+        public override AbstractState handleEvent(InputEvent ev) {
             return null;
         }
 
-        public override BaseState physicsProcess(float dt) {
+        public override AbstractState physicsProcess(float dt) {
             return null;
         }
     }
