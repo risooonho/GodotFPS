@@ -1,0 +1,6 @@
+E:\Godot\funGame\.mono\temp\obj\Tools\funGame.csprojResolveAssemblyReference.cache
+E:\Godot\funGame\.mono\temp\obj\Tools\funGame.csproj.CoreCompileInputs.cache
+E:\Godot\funGame\.mono\temp\bin\Tools\funGame.dll
+E:\Godot\funGame\.mono\temp\bin\Tools\funGame.pdb
+E:\Godot\funGame\.mono\temp\obj\Tools\funGame.dll
+E:\Godot\funGame\.mono\temp\obj\Tools\funGame.pdb

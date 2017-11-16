@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "funGame", "funGame.csproj", "{77FF6DFF-EAB1-4D5E-8197-F3DE557E450F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	Release|Any CPU = Release|Any CPU
+	Tools|Any CPU = Tools|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77FF6DFF-EAB1-4D5E-8197-F3DE557E450F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77FF6DFF-EAB1-4D5E-8197-F3DE557E450F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77FF6DFF-EAB1-4D5E-8197-F3DE557E450F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77FF6DFF-EAB1-4D5E-8197-F3DE557E450F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77FF6DFF-EAB1-4D5E-8197-F3DE557E450F}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
+		{77FF6DFF-EAB1-4D5E-8197-F3DE557E450F}.Tools|Any CPU.Build.0 = Tools|Any CPU
+	EndGlobalSection
+EndGlobal
