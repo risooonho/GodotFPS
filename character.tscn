@@ -19,9 +19,17 @@ _sections_unfolded = [ "Angular", "Linear", "collision" ]
 
 [node name="moveShape" type="CollisionShape" parent="."]
 
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.5, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 1 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
+
+[node name="Tween" type="Tween" parent="."]
+
+playback_process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+_sections_unfolded = [ "playback" ]
 
 

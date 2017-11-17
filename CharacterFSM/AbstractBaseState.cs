@@ -17,28 +17,8 @@ namespace CharacterState
         {
             this.player = player;
         }
-        public virtual AbstractState handleEvent(InputEvent ev)
-        {
-            if (ev is InputEventMouseMotion)
-            {
-                handleMouse((InputEventMouseMotion)ev);
-            }
-            return null;
-        }
+        public abstract AbstractState HandleEvent(InputEvent ev);
 
-        public virtual AbstractState physicsProcess(float dt)
-        {
-
-            return null;
-        }
-
-        public void handleMouse(InputEventMouseMotion iemm)
-        {
-            Vector2 motion = -iemm.GetRelative();
-            player.RotateY(motion.x * mouseSensitivity);
-
-            float xrot = Mathf.max(Mathf.min(motion.y * mouseSensitivity + player.viewCamera.GetRotation().x, Mathf.PI / 2), -Mathf.PI / 2);
-            player.viewCamera.SetRotation(new Vector3(xrot, 0, 0));
-        }
+        public abstract AbstractState PhysicsProcess(float dt);
     }
 }

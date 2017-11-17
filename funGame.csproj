@@ -51,15 +51,15 @@
   <ItemGroup>
     <Compile Include="CharacterFSM\AbstractBaseState.cs" />
     <Compile Include="Character.cs" />
-    <Compile Include="CharacterFSM\ClimbingState.cs" />
-    <Compile Include="CharacterFSM\CrouchingState.cs" />
-    <Compile Include="CharacterFSM\CrouchWalkingState.cs" />
-    <Compile Include="CharacterFSM\FallingState.cs" />
+    <Compile Include="CharacterFSM\MovementFocused\CrouchingState.cs" />
+    <Compile Include="CharacterFSM\MovementFocused\CrouchWalkingState.cs" />
+    <Compile Include="CharacterFSM\MovementFocused\FallingState.cs" />
+    <Compile Include="CharacterFSM\MovementFocused\AbstractMovementState.cs" />
     <Compile Include="Floor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CharacterFSM\RunningState.cs" />
-    <Compile Include="CharacterFSM\StandingState.cs" />
-    <Compile Include="CharacterFSM\WalkingState.cs" />
+    <Compile Include="CharacterFSM\MovementFocused\RunningState.cs" />
+    <Compile Include="CharacterFSM\MovementFocused\StandingState.cs" />
+    <Compile Include="CharacterFSM\MovementFocused\WalkingState.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
