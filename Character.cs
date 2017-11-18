@@ -5,21 +5,26 @@ using CharacterState.MovementFocused;
 
 public class Character : KinematicBody {
 	
-	public Camera viewCamera = new Camera();
 	public Vector3 movementVector = new Vector3();
 	public Vector3 otherForces = new Vector3();
 
+	public Camera viewCamera;
 	public CapsuleShape moveShape;
-	private AbstractState state;
+	public Tween tween;
 
+	private AbstractState state;
+	
 	public bool crouchHeld = false;
 	public bool runHeld = false;
 
+
 	public override void _Ready() {
 		moveShape = (CapsuleShape)((CollisionShape)GetNode("moveShape")).GetShape();
+		viewCamera = (Camera) GetNode("Camera");
+		tween = (Tween) GetNode("Tween");
+
 		Input.SetMouseMode(Input.MOUSE_MODE_CAPTURED);
 		state = new StandingState(this);
-		AddChild(viewCamera);
 	}
 
 	public override void _Input(InputEvent ev) {
@@ -32,12 +37,20 @@ public class Character : KinematicBody {
 
 	public void ChangeHeight(float height)
 	{
+		
 		float heightDifference = height - moveShape.GetHeight();
 		if (heightDifference != 0)
 		{
-			moveShape.SetHeight(height);
-			viewCamera.SetTranslation(new Vector3 { y = height / 2 });
-			this.Translate(new Vector3 { y = (heightDifference) / 2 });
+			tween.InterpolateProperty(moveShape, "height", moveShape.GetHeight(), height, 0.25f, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
+			tween.InterpolateProperty(viewCamera, "translation", viewCamera.GetTranslation(), new Vector3 { y = height / 2 }, 0.25f, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
+			//tween.InterpolateProperty(this, "translation", this.GetTranslation(), this.GetTranslation() - new Vector3 { y = (heightDifference) / 2 }, 0.5f, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
+
+
+			//moveShape.SetHeight(height);
+			//viewCamera.SetTranslation(new Vector3 { y = height / 2 });
+			//this.Translate(new Vector3 { y = (heightDifference) / 2 });
+			tween.Start();
+
 		}
 
 	}

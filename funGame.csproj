@@ -61,6 +61,8 @@
     <Compile Include="CharacterFSM\MovementFocused\StandingState.cs" />
     <Compile Include="CharacterFSM\MovementFocused\WalkingState.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CharacterFSM\InteractionFocused\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -95,7 +95,8 @@ namespace CharacterState.MovementFocused
             {
                 return new FallingState(player);
             }
-            player.otherForces.y = -1;   //Keep player grounded
+            //Keep player grounded
+            player.otherForces.y = -1; //This is kinda hacky
             return this;
         }
     }
