@@ -33,16 +33,8 @@ namespace CharacterState.MovementFocused
                 return new CrouchingState(player);
             }
 
-            KinematicCollision kc = player.MoveAndCollide(player.otherForces * dt);
-            if (kc != null)
-            {
-                player.otherForces.y = -gravity;
-                return this;
-            }
-            else
-            {
-                return new FallingState(player);
-            }
+            //If the player isn't colliding with anything, change to falling state
+            return CheckIfFalling(player.MoveAndCollide(player.otherForces * dt));
         }
     }
 }

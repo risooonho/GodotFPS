@@ -31,7 +31,7 @@ namespace CharacterState.MovementFocused
             }
             else
             {
-                player.otherForces.y = -gravity * dt;
+                player.otherForces.y = -1; //Keep grounded - Super hacky?
                 return new StandingState(player);
             }
         }

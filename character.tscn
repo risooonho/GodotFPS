@@ -40,7 +40,7 @@ shape = SubResource( 1 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
-[node name="Tween" type="Tween" parent="."]
+[node name="HeightTween" type="Tween" parent="."]
 
 playback_process_mode = 1
 playback/active = false
