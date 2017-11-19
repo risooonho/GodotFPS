@@ -4,9 +4,9 @@ namespace CharacterState.Movement
     public class WalkingState : AbstractMovementState
     {
 
-        public WalkingState(Character player) : base(player)
+        public WalkingState(CharacterStateManager csm) : base(csm)
         {
-            player.ChangeHeight(1f);
+            csm.ChangeHeight(1f);
             GD.print("Walking" + "State");
         }
 
@@ -15,7 +15,7 @@ namespace CharacterState.Movement
             base.HandleEvent(ev);
             if (ev.IsActionPressed("character_jump"))
             {
-                player.otherForces.y = jumpHeight;
+                sharedState.otherForces.y = jumpHeight;
             }
             return this;
         }
@@ -23,25 +23,23 @@ namespace CharacterState.Movement
         public override AbstractState PhysicsProcess(float dt)
         {
             base.PhysicsProcess(dt);
-            Vector3 computedMovement = (player.movementVector.rotated(up, player.GetRotation().y)).normalized() * walkSpeed * dt;
-            
-            player.MoveAndSlide(computedMovement, up, 1f, 4, Mathf.PI / 4);
+            sharedState.ConsciousMovement(CalculateMovementVector(dt));
 
-            if (player.movementVector.z == 0 && player.movementVector.x == 0)
+            if (!sharedState.WantsToMove())
             {
-                return new StandingState(player);
+                return new StandingState(sharedState);
             }
-            else if (player.runHeld)
+            else if (sharedState.wantsToRun && sharedState.stamina >= runningStaminaThreshold)
             {
-                return new RunningState(player);
+                return new RunningState(sharedState);
             }
-            else if (player.crouchHeld)
+            else if (sharedState.wantsToCrouch)
             {
-                return new CrouchWalkingState(player);
+                return new CrouchWalkingState(sharedState);
             }
             
             //If the player isn't colliding with anything, change to falling state
-            return CheckIfFalling(player.MoveAndCollide(player.otherForces * dt));
+            return CheckIfFalling(sharedState.UnconsciousMovement(sharedState.otherForces * dt));
         }
     }
 }

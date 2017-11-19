@@ -6,32 +6,26 @@ namespace CharacterState.Movement
     {
         private const float crouchHeight = 0.5f;
 
-        public CrouchingState(Character player) : base(player)
+        public CrouchingState(CharacterStateManager csm) : base(csm)
         {
             GD.print("Crouching" + "State");
-            player.ChangeHeight(crouchHeight);
-        }
-
-        public override AbstractState HandleEvent(InputEvent ev)
-        {
-            base.HandleEvent(ev);
-            return this;
+            csm.ChangeHeight(crouchHeight);
         }
 
         public override AbstractState PhysicsProcess(float dt)
         {
             base.PhysicsProcess(dt);
-            if (PlayerWantsToMove())
+            if (sharedState.WantsToMove())
             {
-                return new CrouchWalkingState(player);
+                return new CrouchWalkingState(sharedState);
             }
-            else if (!player.crouchHeld)
+            else if (!sharedState.wantsToCrouch)
             {
-                return new StandingState(player);
+                return new StandingState(sharedState);
             }
             
             //If the player isn't colliding with anything, change to falling state
-            return CheckIfFalling(player.MoveAndCollide(player.otherForces * dt));
+            return CheckIfFalling(sharedState.UnconsciousMovement(sharedState.otherForces * dt));
         }
     }
 }

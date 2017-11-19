@@ -2,21 +2,21 @@
 
 namespace CharacterState.Interaction
 {
-    class InteractionState : AbstractInteractionState
+    public class InteractionState : AbstractInteractionState
     {
-        public InteractionState(Character player) : base(player)
+        public InteractionState(CharacterStateManager csm) : base(csm)
         {
 
         }
 
         public override AbstractState HandleEvent(InputEvent ev)
         {
-            return null;
+            return this;
         }
 
         public override AbstractState PhysicsProcess(float dt)
         {
-            return null;
+            return this;
         }
     }
 }

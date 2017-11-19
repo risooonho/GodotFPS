@@ -3,25 +3,24 @@ namespace CharacterState.Movement
 {
     public class FallingState : AbstractMovementState
     {
-        public FallingState(Character player) : base(player)
+        public FallingState(CharacterStateManager csm) : base(csm)
         {
             GD.print("Falling" + "State");
-            player.ChangeHeight(1f);
+            csm.ChangeHeight(1f);
         }
 
         public override AbstractState PhysicsProcess(float dt)
         {
             base.PhysicsProcess(dt);
-            Vector3 computedDirection = (player.movementVector.rotated(up, player.GetRotation().y)).normalized() * walkSpeed * dt;
 
-            player.MoveAndSlide(computedDirection, new Vector3(0, 1, 0), 1f, 4, Mathf.PI / 4);
+            sharedState.ConsciousMovement(CalculateMovementVector(dt));
 
             //If the player is colliding with anything, change to stationary state
-            KinematicCollision kc = player.MoveAndCollide(player.otherForces * dt);
+            KinematicCollision kc = sharedState.UnconsciousMovement(sharedState.otherForces * dt);
             if (kc != null)
             {
-                player.otherForces.y = -1; //Keep grounded - Super hacky?
-                return new StandingState(player);
+                sharedState.otherForces.y = -5; //Keep grounded - Super hacky?
+                return new StandingState(sharedState);
             }
             return this;
         }

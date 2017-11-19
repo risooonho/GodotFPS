@@ -4,7 +4,18 @@ namespace CharacterState.Movement
 {
     public abstract class AbstractMovementState : AbstractState
     {
-        public AbstractMovementState(Character player) : base(player)
+        public Vector3 up = new Vector3(0, 1, 0);
+
+        protected const float gravity = 9.8f;
+        protected const float jumpHeight = 5f;
+        protected const float runMultiplier = 3f;
+        protected const float walkSpeed = 100f;
+        protected const float mouseSensitivity = 0.005f;
+
+        protected const float maxStamina = 10f;
+        protected const float runningStaminaThreshold = 5f;
+
+        public AbstractMovementState(CharacterStateManager csm) : base(csm)
         {
 
         }
@@ -23,43 +34,45 @@ namespace CharacterState.Movement
 
         public override AbstractState PhysicsProcess(float dt)
         {
-            player.otherForces.y -= gravity * dt;
-            return null;
+            sharedState.otherForces.y -= gravity * dt;
+            CalculateStamina(dt);
+            return this;
         }
 
-        public bool HandleMovementEvents(InputEvent ev)
+        protected bool HandleMovementEvents(InputEvent ev)
         {
             if (ev.IsActionPressed("character_forward") || ev.IsActionReleased("character_backward"))
             {
-                player.movementVector.z--;
+                sharedState.movementVector.z--;
             }
             else if (ev.IsActionReleased("character_forward") || ev.IsActionPressed("character_backward"))
             {
-                player.movementVector.z++;
+                sharedState.movementVector.z++;
             }
             else if (ev.IsActionPressed("character_strafe_right") || ev.IsActionReleased("character_strafe_left"))
             {
-                player.movementVector.x++;
+                sharedState.movementVector.x++;
             }
             else if (ev.IsActionReleased("character_strafe_right") || ev.IsActionPressed("character_strafe_left"))
             {
-                player.movementVector.x--;
+                sharedState.movementVector.x--;
             }
             else if (ev.IsActionPressed("character_run"))
             {
-                player.runHeld = true;
+                sharedState.wantsToRun = true;
             }
             else if (ev.IsActionReleased("character_run"))
             {
-                player.runHeld = false;
+                sharedState.wantsToRun = false;
             }
             else if (ev.IsActionPressed("character_crouch"))
             {
-                player.crouchHeld = true;
+                //sharedState.wantsToCrouch = true;
+                sharedState.wantsToCrouch = !sharedState.wantsToCrouch;
             }
             else if (ev.IsActionReleased("character_crouch"))
             {
-                player.crouchHeld = false;
+                //sharedState.wantsToCrouch = false;
             }
             else
             {
@@ -69,34 +82,38 @@ namespace CharacterState.Movement
             return true;    //Event is handled
         }
 
-        public void HandleMouse(InputEventMouseMotion iemm)
+        private void HandleMouse(InputEventMouseMotion iemm)
         {
             Vector2 motion = -iemm.GetRelative();
-            player.RotateY(motion.x * mouseSensitivity);
-
-            float xrot = Mathf.max(Mathf.min(motion.y * mouseSensitivity + player.viewCamera.GetRotation().x, Mathf.PI / 2), -Mathf.PI / 2);
-            player.viewCamera.SetRotation(new Vector3(xrot, 0, 0));
+            sharedState.RotateCamera(new Vector3 { x = motion.y, y = motion.x } * mouseSensitivity);
         }
 
-        protected Vector3 CalculateWalkVector(float dt)
+        protected Vector3 CalculateMovementVector(float dt)
         {
-            return (player.movementVector.rotated(up, player.GetRotation().y)).normalized() * walkSpeed * dt;
-        }
-
-        protected bool PlayerWantsToMove()
-        {
-            return player.movementVector.x != 0 || player.movementVector.z != 0;
+            Vector3 finalMovement = sharedState.movementVector.rotated(up, sharedState.GetCharacterRotation().y);
+            finalMovement = finalMovement.normalized();
+            finalMovement *= walkSpeed * dt;
+            return finalMovement;
         }
 
         protected AbstractState CheckIfFalling(KinematicCollision kc)
         {
             if (kc == null)
             {
-                return new FallingState(player);
+                return new FallingState(sharedState);
             }
-            //Keep player grounded
-            player.otherForces.y = -1; //This is kinda hacky
+            sharedState.otherForces.y = -5; //Keep player grounded - This is kinda hacky
             return this;
         }
+
+        protected virtual void CalculateStamina(float dt)
+        {
+            sharedState.stamina += dt;
+            if (sharedState.stamina > maxStamina)
+            {
+                sharedState.stamina = maxStamina;
+            }
+        }
+
     }
 }

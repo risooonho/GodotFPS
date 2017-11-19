@@ -2,9 +2,9 @@
 
 namespace CharacterState.Leaning
 {
-    class AbstractLeaningState : AbstractState
+    public class AbstractLeaningState : AbstractState
     {
-        public AbstractLeaningState(Character player) : base(player)
+        public AbstractLeaningState(CharacterStateManager csm) : base(csm)
         {
 
         }

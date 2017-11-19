@@ -3,7 +3,7 @@ namespace CharacterState.Movement
 {
     public class RunningState : AbstractMovementState
     {
-        public RunningState(Character player) : base(player)
+        public RunningState(CharacterStateManager csm) : base(csm)
         {
             GD.print("Running" + "State");
         }
@@ -14,7 +14,7 @@ namespace CharacterState.Movement
 
             if (ev.IsActionPressed("character_jump"))
             {
-                player.otherForces.y = jumpHeight;
+                sharedState.otherForces.y = jumpHeight;
             }
 
             return this;
@@ -23,21 +23,33 @@ namespace CharacterState.Movement
         public override AbstractState PhysicsProcess(float dt)
         {
             base.PhysicsProcess(dt);
-            Vector3 computedDirection = (player.movementVector.rotated(up, player.GetRotation().y)).normalized() * walkSpeed * runMultiplier * dt;
 
-            player.MoveAndSlide(computedDirection, up, 1f, 4, Mathf.PI / 4);
-
-            if (player.movementVector.z == 0 && player.movementVector.x == 0)
+            if (sharedState.stamina == 0)
             {
-                return new StandingState(player);
+                return new WalkingState(sharedState);
             }
-            else if (!player.runHeld)
+
+            sharedState.ConsciousMovement(CalculateMovementVector(dt) * runMultiplier);
+            if (!sharedState.WantsToMove())
             {
-                return new WalkingState(player);
+                return new StandingState(sharedState);
+            }
+            else if (!sharedState.wantsToRun)
+            {
+                return new WalkingState(sharedState);
             }
             
             //If the player isn't colliding with anything, change to falling state
-            return CheckIfFalling(player.MoveAndCollide(player.otherForces * dt));
+            return CheckIfFalling(sharedState.UnconsciousMovement(sharedState.otherForces * dt));
+        }
+
+        protected override void CalculateStamina(float dt)
+        {
+            sharedState.stamina -= dt;
+            if (sharedState.stamina < 0)
+            {
+                sharedState.stamina = 0;
+            }
         }
     }
 }

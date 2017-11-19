@@ -2,21 +2,21 @@
 
 namespace CharacterState.Leaning
 {
-    class LeaningState : AbstractLeaningState
+    public class LeaningState : AbstractLeaningState
     {
-        public LeaningState(Character player) : base(player)
+        public LeaningState(CharacterStateManager csm) : base(csm)
         {
 
         }
 
         public override AbstractState HandleEvent(InputEvent ev)
         {
-            return null;
+            return this;
         }
 
         public override AbstractState PhysicsProcess(float dt)
         {
-            return null;
+            return this;
         }
     }
 }

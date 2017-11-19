@@ -6,13 +6,13 @@ using CharacterState.Interaction;
 
 namespace CharacterState
 {
-    class StateManager
+    public class CharacterStateManager
     {
-        Character character;
+        private Character character;
 
-        AbstractMovementState movementState;
-        AbstractLeaningState leaningState;
-        AbstractInteractionState interactionState;
+        public AbstractMovementState movementState;
+        public AbstractLeaningState leaningState;
+        public AbstractInteractionState interactionState;
 
         public Vector3 movementVector = new Vector3();
         public Vector3 otherForces = new Vector3();
@@ -20,32 +20,63 @@ namespace CharacterState
         public bool wantsToCrouch = false;
         public bool wantsToRun = false;
 
-        public StateManager(Character character)
+        public float stamina = 0f;
+
+        public CharacterStateManager(Character character)
         {
             this.character = character;
-
-            movementState = new StandingState(character);
-            leaningState = new LeaningState(character);
-            interactionState = new InteractionState(character);
+            movementState = new StandingState(this);
+            leaningState = new LeaningState(this);
+            interactionState = new InteractionState(this);
         }
 
         public void _Input(InputEvent ev)
         {
-            movementState.HandleEvent(ev);
-            leaningState.HandleEvent(ev);
-            interactionState.HandleEvent(ev);
+            movementState = (AbstractMovementState)movementState.HandleEvent(ev);
+            leaningState = (AbstractLeaningState)leaningState.HandleEvent(ev);
+            interactionState = (AbstractInteractionState)interactionState.HandleEvent(ev);
         }
 
         public void _PhysicsProcess(float dt)
         {
-            movementState.PhysicsProcess(dt);
-            leaningState.PhysicsProcess(dt);
-            interactionState.PhysicsProcess(dt);
+            movementState = (AbstractMovementState) movementState.PhysicsProcess(dt);
+            leaningState = (AbstractLeaningState)leaningState.PhysicsProcess(dt);
+            interactionState = (AbstractInteractionState)interactionState.PhysicsProcess(dt);
         }
 
-        public bool wantsToMove()
+        public bool WantsToMove()
         {
-            return !(movementVector.z == 0 && movementVector.x == 0);
+            return movementVector.z != 0 || movementVector.x != 0;
+        }
+
+        public Vector3 ConsciousMovement(Vector3 movement)
+        {
+            return character.ConsciousMovement(movement);
+        }
+
+        public KinematicCollision UnconsciousMovement(Vector3 movement)
+        {
+            return character.UnconsciousMovement(movement);
+        }
+
+        public void ChangeHeight(float height)
+        {
+            character.ChangeHeight(height);
+        }
+        
+        public Vector3 GetCharacterRotation()
+        {
+            return character.GetCharacterRotation();
+        }
+
+        public void RotateCamera(Vector3 rotation)
+        {
+            character.RotateCamera(rotation);
+        }
+
+        public bool NoStandingSpace()
+        {
+            return character.NoStandingSpace();
         }
     }
 }

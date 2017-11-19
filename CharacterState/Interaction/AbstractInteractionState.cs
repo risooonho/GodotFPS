@@ -2,9 +2,9 @@
 
 namespace CharacterState.Interaction
 {
-    class AbstractInteractionState : AbstractState
+    public class AbstractInteractionState : AbstractState
     {
-        public AbstractInteractionState(Character player) : base(player)
+        public AbstractInteractionState(CharacterStateManager csm) : base(csm)
         {
 
         }
