@@ -1,7 +1,6 @@
 ﻿using Godot;
-using CharacterState;
 
-namespace CharacterState.MovementFocused
+namespace CharacterState.Movement
 {
     public abstract class AbstractMovementState : AbstractState
     {

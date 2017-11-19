@@ -1,13 +1,15 @@
 using Godot;
-namespace CharacterState.MovementFocused
-{
-    public class CrouchWalkingState : AbstractMovementState
-    {
 
-        public CrouchWalkingState(Character player) : base(player)
+namespace CharacterState.Movement
+{
+    public class CrouchingState : AbstractMovementState
+    {
+        private const float crouchHeight = 0.5f;
+
+        public CrouchingState(Character player) : base(player)
         {
-            player.ChangeHeight(0.5f);
-            GD.print("CrouchWalking" + "State");
+            GD.print("Crouching" + "State");
+            player.ChangeHeight(crouchHeight);
         }
 
         public override AbstractState HandleEvent(InputEvent ev)
@@ -19,17 +21,15 @@ namespace CharacterState.MovementFocused
         public override AbstractState PhysicsProcess(float dt)
         {
             base.PhysicsProcess(dt);
-            Vector3 computedDirection = CalculateWalkVector(dt);
-
-            player.MoveAndSlide(computedDirection, up, 1f, 4, Mathf.PI / 4);
-            if (player.movementVector.z == 0 && player.movementVector.x == 0)
+            if (PlayerWantsToMove())
             {
-                return new CrouchingState(player);
+                return new CrouchWalkingState(player);
             }
             else if (!player.crouchHeld)
             {
-                return new WalkingState(player);
+                return new StandingState(player);
             }
+            
             //If the player isn't colliding with anything, change to falling state
             return CheckIfFalling(player.MoveAndCollide(player.otherForces * dt));
         }

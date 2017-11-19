@@ -1,5 +1,5 @@
 using Godot;
-namespace CharacterState.MovementFocused
+namespace CharacterState.Movement
 {
     public class FallingState : AbstractMovementState
     {
@@ -7,13 +7,6 @@ namespace CharacterState.MovementFocused
         {
             GD.print("Falling" + "State");
             player.ChangeHeight(1f);
-        }
-
-        public override AbstractState HandleEvent(InputEvent ev)
-        {
-            base.HandleEvent(ev);
-
-            return this;
         }
 
         public override AbstractState PhysicsProcess(float dt)
@@ -25,15 +18,12 @@ namespace CharacterState.MovementFocused
 
             //If the player is colliding with anything, change to stationary state
             KinematicCollision kc = player.MoveAndCollide(player.otherForces * dt);
-            if (kc == null)
-            {
-                return this;
-            }
-            else
+            if (kc != null)
             {
                 player.otherForces.y = -1; //Keep grounded - Super hacky?
                 return new StandingState(player);
             }
+            return this;
         }
     }
 }

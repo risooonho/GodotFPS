@@ -1,10 +1,13 @@
 using Godot;
 
 using CharacterState;
-using CharacterState.MovementFocused;
+using CharacterState.Movement;
 
 public class Character : KinematicBody {
 	
+	private const float maximumClimbableSlope = Mathf.PI / 4;
+	private Vector3 up = new Vector3(0,1,0);
+
 	public Vector3 movementVector = new Vector3();
 	public Vector3 otherForces = new Vector3();
 
@@ -36,7 +39,6 @@ public class Character : KinematicBody {
 
 	public void ChangeHeight(float height)
 	{
-		
 		float heightDifference = height - moveShape.GetHeight();
 		if (heightDifference != 0)
 		{
@@ -52,5 +54,23 @@ public class Character : KinematicBody {
 
 		}
 
+	}
+
+	/**
+	 * Where the player wants to consciously go.
+	 * If I get pushed forward by someone, that isn't a conscious desire to go in that direction.
+	 * If I decide to walk over and pick something up, that is conscious movement.
+	 **/
+	public Vector3 consciousMovement(Vector3 movement)
+	{
+		return MoveAndSlide(movement, up, 0.05f, 4, maximumClimbableSlope);
+	}
+
+	/**
+	 * Stuff like gravity, things out of direct player control
+	 **/
+	public KinematicCollision unconsciousMovement(Vector3 movement)
+	{
+		return MoveAndCollide(movement);
 	}
 }

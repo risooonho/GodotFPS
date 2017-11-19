@@ -1,43 +1,39 @@
 using Godot;
-namespace CharacterState.MovementFocused
+namespace CharacterState.Movement
 {
-    public class WalkingState : AbstractMovementState
+    public class RunningState : AbstractMovementState
     {
-
-        public WalkingState(Character player) : base(player)
+        public RunningState(Character player) : base(player)
         {
-            player.ChangeHeight(1f);
-            GD.print("Walking" + "State");
+            GD.print("Running" + "State");
         }
 
         public override AbstractState HandleEvent(InputEvent ev)
         {
             base.HandleEvent(ev);
+
             if (ev.IsActionPressed("character_jump"))
             {
                 player.otherForces.y = jumpHeight;
             }
+
             return this;
         }
 
         public override AbstractState PhysicsProcess(float dt)
         {
             base.PhysicsProcess(dt);
-            Vector3 computedMovement = (player.movementVector.rotated(up, player.GetRotation().y)).normalized() * walkSpeed * dt;
-            
-            player.MoveAndSlide(computedMovement, up, 1f, 4, Mathf.PI / 4);
+            Vector3 computedDirection = (player.movementVector.rotated(up, player.GetRotation().y)).normalized() * walkSpeed * runMultiplier * dt;
+
+            player.MoveAndSlide(computedDirection, up, 1f, 4, Mathf.PI / 4);
 
             if (player.movementVector.z == 0 && player.movementVector.x == 0)
             {
                 return new StandingState(player);
             }
-            else if (player.runHeld)
+            else if (!player.runHeld)
             {
-                return new RunningState(player);
-            }
-            else if (player.crouchHeld)
-            {
-                return new CrouchWalkingState(player);
+                return new WalkingState(player);
             }
             
             //If the player isn't colliding with anything, change to falling state
