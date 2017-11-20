@@ -26,7 +26,7 @@ namespace CharacterState
         {
             this.character = character;
             movementState = new StandingState(this);
-            leaningState = new LeaningState(this);
+            leaningState = new NoLeaningState(this);
             interactionState = new InteractionState(this);
         }
 
@@ -77,6 +77,11 @@ namespace CharacterState
         public bool NoStandingSpace()
         {
             return character.NoStandingSpace();
+        }
+
+        public void LeanAtDegrees(float angle)
+        {
+            character.LeanAtDegrees(angle);
         }
     }
 }

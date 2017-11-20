@@ -25,6 +25,12 @@ namespace CharacterState.Movement
             base.PhysicsProcess(dt);
             sharedState.ConsciousMovement(CalculateMovementVector(dt));
 
+            if (sharedState.NoStandingSpace())
+            {
+                sharedState.wantsToCrouch = true;
+                return new CrouchWalkingState(sharedState);
+            }
+
             if (!sharedState.WantsToMove())
             {
                 return new StandingState(sharedState);

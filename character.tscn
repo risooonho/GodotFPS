@@ -15,7 +15,7 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.001
 script = ExtResource( 1 )
-_sections_unfolded = [ "Angular", "Linear", "collision" ]
+_sections_unfolded = [ "Angular", "Linear", "Transform" ]
 
 [node name="Camera" type="Camera" parent="."]
 
@@ -47,5 +47,12 @@ playback/active = false
 playback/repeat = false
 playback/speed = 1.0
 _sections_unfolded = [ "playback" ]
+
+[node name="LeanTween" type="Tween" parent="."]
+
+playback_process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
 
 

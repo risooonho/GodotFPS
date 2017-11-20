@@ -9,3 +9,4 @@ E:\Godot\GodotFPS\.mono\temp\bin\Debug\funGame.pdb
 E:\Godot\GodotFPS\.mono\temp\obj\Debug\funGame.csproj.CoreCompileInputs.cache
 E:\Godot\GodotFPS\.mono\temp\obj\Debug\funGame.dll
 E:\Godot\GodotFPS\.mono\temp\obj\Debug\funGame.pdb
+E:\Godot\GodotFPS\.mono\temp\obj\Debug\funGame.csprojResolveAssemblyReference.cache

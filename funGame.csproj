@@ -56,6 +56,7 @@
     <Compile Include="CharacterState\CharacterStateManager.cs" />
     <Compile Include="CharacterState\Interaction\InteractionState.cs" />
     <Compile Include="CharacterState\Leaning\LeaningState.cs" />
+    <Compile Include="CharacterState\Leaning\NoLeaningState.cs" />
     <Compile Include="CharacterState\Movement\CrouchingState.cs" />
     <Compile Include="CharacterState\Movement\CrouchWalkingState.cs" />
     <Compile Include="CharacterState\Movement\FallingState.cs" />

@@ -8,7 +8,9 @@ public class Character : KinematicBody {
 
 	private Camera viewCamera;
 	private CapsuleShape moveShape;
+
 	private Tween heightTween;
+	private Tween leanTween;
 
 	private CharacterStateManager stateManager;
 
@@ -18,6 +20,7 @@ public class Character : KinematicBody {
 		moveShape = (CapsuleShape)((CollisionShape)GetNode("moveShape")).GetShape();
 
 		heightTween = (Tween) GetNode("HeightTween");
+		leanTween = (Tween)GetNode("LeanTween");
 
 		Input.SetMouseMode(Input.MOUSE_MODE_CAPTURED);
 		stateManager = new CharacterStateManager(this);
@@ -37,7 +40,9 @@ public class Character : KinematicBody {
 		if (height - moveShape.GetHeight() != 0)
 		{
 			heightTween.InterpolateProperty(moveShape, "height", moveShape.GetHeight(), height, 0.1f, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
-			heightTween.InterpolateProperty(viewCamera, "translation", viewCamera.GetTranslation(), new Vector3 { y = height / 2 }, 0.1f, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
+			Vector3 cameraHeightTranslation = viewCamera.GetTranslation();
+			cameraHeightTranslation.y = height / 2;
+			heightTween.InterpolateProperty(viewCamera, "translation", viewCamera.GetTranslation(), cameraHeightTranslation, 0.1f, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
 			heightTween.Start();
 		}
 	}
@@ -72,8 +77,32 @@ public class Character : KinematicBody {
 		return viewCamera.GetRotation();
 	}
 
-    public bool NoStandingSpace()
-    {
-        return IsOnCeiling();
-    }
+	public void LeanAtDegrees(float angle)
+	{
+		Vector3 tempRotationDeg = viewCamera.GetRotationDeg();
+
+		Vector3 futureRotation = tempRotationDeg;
+		futureRotation.z = angle;
+		leanTween.InterpolateProperty(viewCamera, "rotation_deg", tempRotationDeg, futureRotation, 0.1f, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
+
+		//This here is real hacky, will fix when I finalize how character rotation works
+		Vector3 axis = new Vector3 { x = Mathf.cos(Mathf.deg2rad(tempRotationDeg.y)), z = Mathf.sin(Mathf.deg2rad(tempRotationDeg.y)) };
+		GD.print("Axis: " + axis);
+
+		Vector3 futureTranslation = viewCamera.GetTranslation();
+		float rotationDelta = Mathf.deg2rad(angle - tempRotationDeg.z);
+		GD.print("RotationDelta: " + rotationDelta);
+		GD.print("Prev: " + futureTranslation);
+		futureTranslation = futureTranslation.rotated(axis, rotationDelta);
+		GD.print("Future: " + futureTranslation);
+
+		leanTween.InterpolateProperty(viewCamera, "translation", viewCamera.GetTranslation(), futureTranslation, 0.1f, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
+
+		leanTween.Start();
+	}
+
+	public bool NoStandingSpace()
+	{
+		return IsOnCeiling();
+	}
 }

@@ -4,19 +4,22 @@ namespace CharacterState.Leaning
 {
     public class AbstractLeaningState : AbstractState
     {
-        public AbstractLeaningState(CharacterStateManager csm) : base(csm)
+        protected float angle = 0f;
+        protected float leanAngle = 25f;
+
+        public AbstractLeaningState(CharacterStateManager sharedState) : base(sharedState)
         {
 
         }
 
         public override AbstractState HandleEvent(InputEvent ev)
         {
-            return null;
+            return this;
         }
 
         public override AbstractState PhysicsProcess(float dt)
         {
-            return null;
+            return this;
         }
     }
 }

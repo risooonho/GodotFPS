@@ -25,7 +25,7 @@ namespace CharacterState.Movement
             {
                 HandleMouse((InputEventMouseMotion)ev);
             }
-            else if (HandleMovementEvents(ev))
+            else if (!HandleMovementEvents(ev))
             {
 
             }
@@ -39,7 +39,7 @@ namespace CharacterState.Movement
             return this;
         }
 
-        protected bool HandleMovementEvents(InputEvent ev)
+        private bool HandleMovementEvents(InputEvent ev)
         {
             if (ev.IsActionPressed("character_forward") || ev.IsActionReleased("character_backward"))
             {
@@ -67,12 +67,11 @@ namespace CharacterState.Movement
             }
             else if (ev.IsActionPressed("character_crouch"))
             {
-                //sharedState.wantsToCrouch = true;
-                sharedState.wantsToCrouch = !sharedState.wantsToCrouch;
+                sharedState.wantsToCrouch = true;
             }
             else if (ev.IsActionReleased("character_crouch"))
             {
-                //sharedState.wantsToCrouch = false;
+                sharedState.wantsToCrouch = false;
             }
             else
             {
