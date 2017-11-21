@@ -49,17 +49,23 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterFSM\AbstractBaseState.cs" />
+    <Compile Include="CharacterState\AbstractState.cs" />
     <Compile Include="Character.cs" />
-    <Compile Include="CharacterFSM\MovementFocused\CrouchingState.cs" />
-    <Compile Include="CharacterFSM\MovementFocused\CrouchWalkingState.cs" />
-    <Compile Include="CharacterFSM\MovementFocused\FallingState.cs" />
-    <Compile Include="CharacterFSM\MovementFocused\AbstractMovementState.cs" />
+    <Compile Include="CharacterState\Interaction\AbstractInteractionState.cs" />
+    <Compile Include="CharacterState\Leaning\AbstractLeaningState.cs" />
+    <Compile Include="CharacterState\CharacterStateManager.cs" />
+    <Compile Include="CharacterState\Interaction\InteractionState.cs" />
+    <Compile Include="CharacterState\Leaning\LeaningState.cs" />
+    <Compile Include="CharacterState\Leaning\NoLeaningState.cs" />
+    <Compile Include="CharacterState\Movement\CrouchingState.cs" />
+    <Compile Include="CharacterState\Movement\CrouchWalkingState.cs" />
+    <Compile Include="CharacterState\Movement\FallingState.cs" />
+    <Compile Include="CharacterState\Movement\AbstractMovementState.cs" />
     <Compile Include="Floor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CharacterFSM\MovementFocused\RunningState.cs" />
-    <Compile Include="CharacterFSM\MovementFocused\StandingState.cs" />
-    <Compile Include="CharacterFSM\MovementFocused\WalkingState.cs" />
+    <Compile Include="CharacterState\Movement\RunningState.cs" />
+    <Compile Include="CharacterState\Movement\StandingState.cs" />
+    <Compile Include="CharacterState\Movement\WalkingState.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
