@@ -17,7 +17,11 @@ collision/safe_margin = 0.001
 script = ExtResource( 1 )
 _sections_unfolded = [ "Angular", "Linear", "Transform" ]
 
-[node name="Camera" type="Camera" parent="."]
+[node name="CameraSpatial" type="Spatial" parent="."]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00647354, -4.76837e-07, -0.00236678 )
+
+[node name="Camera" type="Camera" parent="CameraSpatial"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 projection = 0
@@ -33,14 +37,14 @@ v_offset = 0.0
 doppler/tracking = 0
 _sections_unfolded = [ "Transform" ]
 
-[node name="moveShape" type="CollisionShape" parent="."]
+[node name="BobbingTween" type="Tween" parent="CameraSpatial/Camera"]
 
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 1 )
-disabled = false
-_sections_unfolded = [ "Transform" ]
+playback_process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
 
-[node name="HeightTween" type="Tween" parent="."]
+[node name="HeightTween" type="Tween" parent="CameraSpatial"]
 
 playback_process_mode = 1
 playback/active = false
@@ -48,11 +52,18 @@ playback/repeat = false
 playback/speed = 1.0
 _sections_unfolded = [ "playback" ]
 
-[node name="LeanTween" type="Tween" parent="."]
+[node name="LeanTween" type="Tween" parent="CameraSpatial"]
 
 playback_process_mode = 1
 playback/active = false
 playback/repeat = false
 playback/speed = 1.0
+
+[node name="moveShape" type="CollisionShape" parent="."]
+
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+disabled = false
+_sections_unfolded = [ "Transform" ]
 
 

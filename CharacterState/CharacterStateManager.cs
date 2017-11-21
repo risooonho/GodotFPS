@@ -76,7 +76,7 @@ namespace CharacterState
 
         public bool NoStandingSpace()
         {
-            return character.NoStandingSpace();
+            return character.IsOnCeiling();
         }
 
         public void LeanAtDegrees(float angle)

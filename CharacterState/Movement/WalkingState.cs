@@ -43,7 +43,7 @@ namespace CharacterState.Movement
             {
                 return new CrouchWalkingState(sharedState);
             }
-            
+
             //If the player isn't colliding with anything, change to falling state
             return CheckIfFalling(sharedState.UnconsciousMovement(sharedState.otherForces * dt));
         }
