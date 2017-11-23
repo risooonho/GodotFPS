@@ -61,6 +61,7 @@
     <Compile Include="CharacterState\Movement\CrouchWalkingState.cs" />
     <Compile Include="CharacterState\Movement\FallingState.cs" />
     <Compile Include="CharacterState\Movement\AbstractMovementState.cs" />
+    <Compile Include="CompassContainer.cs" />
     <Compile Include="Floor.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

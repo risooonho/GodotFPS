@@ -90,6 +90,16 @@ public class Character : KinematicBody {
 		return cameraSpatial.GetRotation();
 	}
 
+	public Vector3 GetCameraRotation()
+	{
+		return new Vector3
+		{
+			x = camera.GetRotation().x,
+			y = cameraSpatial.GetRotation().y,
+			z = cameraSpatial.GetRotation().z
+		};
+	}
+
 	public void LeanAtDegrees(float angle)
 	{
 		Vector3 tempRotationDeg = cameraSpatial.GetRotationDeg();

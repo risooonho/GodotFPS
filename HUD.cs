@@ -15,6 +15,21 @@ public class HUD : CanvasLayer
         main = (Control)GetNode("Main");
         interaction = (Control)GetNode("Interaction");
         menu = (Control)GetNode("Menu");
+        ChangeDirection(0);
+    }
+
+    public void ChangeDirection(float degrees)
+    {
+        Container compassContainer = (Container)main.GetNode("VBoxContainer/Top/CompassContainer");
+        TextureRect compass = (TextureRect)main.GetNode("VBoxContainer/Top/CompassContainer/Compass");
+
+        Vector2 compassTextureSize = compass.RectSize;
+
+        float northPos = (compassContainer.RectSize.x - compass.RectSize.x) / 2;
+        float offset = (degrees % 720) * (compass.RectSize.x / 1800);
+
+        Vector2 nextPosition = new Vector2(northPos + offset, compass.RectPosition.y);
+        compass.RectPosition = nextPosition;
     }
 
     public void SetMaxHealth(float health)

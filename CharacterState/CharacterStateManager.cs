@@ -99,6 +99,7 @@ namespace CharacterState
 
         public void RotateCamera(Vector3 rotation)
         {
+            hud.ChangeDirection(Mathf.rad2deg(rotation.y + character.GetCameraRotation().y));
             character.RotateCamera(rotation);
         }
 
