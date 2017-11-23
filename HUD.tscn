@@ -1,0 +1,278 @@
+[gd_scene format=2]
+
+[node name="HUD" type="CanvasLayer"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="Main" type="MarginContainer" parent="."]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/margin_right = 0
+_sections_unfolded = [ "Anchor", "Grow Direction", "Hint", "Margin", "Rect", "Size Flags", "Theme" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 8.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+_sections_unfolded = [ "Anchor", "Margin" ]
+
+[node name="Top" type="HBoxContainer" parent="Main/VBoxContainer"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1016.0
+margin_bottom = 197.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 3
+alignment = 0
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="Centre" type="HBoxContainer" parent="Main/VBoxContainer"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 201.0
+margin_right = 1016.0
+margin_bottom = 398.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 3
+alignment = 0
+_sections_unfolded = [ "Anchor", "Size Flags" ]
+
+[node name="Left" type="Container" parent="Main/VBoxContainer/Centre"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 336.0
+margin_bottom = 197.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Margin", "Size Flags" ]
+
+[node name="Centre" type="CenterContainer" parent="Main/VBoxContainer/Centre"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 340.0
+margin_right = 676.0
+margin_bottom = 197.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+use_top_left = false
+_sections_unfolded = [ "Anchor", "Margin", "Size Flags", "Visibility" ]
+
+[node name="Pointer" type="ColorRect" parent="Main/VBoxContainer/Centre/Centre"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 166.0
+margin_top = 97.0
+margin_right = 169.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 3, 3 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 1, 1, 1, 0.392157 )
+_sections_unfolded = [ "Grow Direction", "Margin", "Rect" ]
+
+[node name="Right" type="Container" parent="Main/VBoxContainer/Centre"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 680.0
+margin_right = 1016.0
+margin_bottom = 197.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Size Flags" ]
+
+[node name="Bottom" type="HBoxContainer" parent="Main/VBoxContainer"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 402.0
+margin_right = 1016.0
+margin_bottom = 600.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 3
+alignment = 0
+_sections_unfolded = [ "Anchor", "Grow Direction", "Hint", "Margin", "Rect", "Size Flags" ]
+
+[node name="Left" type="Container" parent="Main/VBoxContainer/Bottom"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 336.0
+margin_bottom = 198.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Margin", "Size Flags" ]
+
+[node name="Centre" type="Container" parent="Main/VBoxContainer/Bottom"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 340.0
+margin_right = 676.0
+margin_bottom = 198.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+_sections_unfolded = [ "Anchor", "Margin", "Size Flags", "Visibility" ]
+
+[node name="Health" type="ColorRect" parent="Main/VBoxContainer/Bottom/Centre"]
+
+anchor_left = 0.0
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 0.9
+margin_top = -0.399994
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+color = Color( 0.695313, 0.695313, 0.695313, 0.392157 )
+_sections_unfolded = [ "Anchor", "Focus", "Grow Direction", "Margin", "Rect", "Size Flags" ]
+
+[node name="Stamina" type="ColorRect" parent="Main/VBoxContainer/Bottom/Centre"]
+
+anchor_left = 0.0
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 0.95
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+color = Color( 0.443481, 0.65625, 0.476727, 0.392157 )
+_sections_unfolded = [ "Anchor", "Focus", "Grow Direction", "Margin", "Rect", "Size Flags" ]
+
+[node name="Backdrop" type="ColorRect" parent="Main/VBoxContainer/Bottom/Centre"]
+
+anchor_left = 0.0
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 0.95
+margin_top = -0.399994
+margin_bottom = -0.0999908
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+color = Color( 0.421875, 0.421875, 0.421875, 0.196078 )
+_sections_unfolded = [ "Anchor", "Focus", "Grow Direction", "Margin", "Rect", "Size Flags" ]
+
+[node name="Right" type="Container" parent="Main/VBoxContainer/Bottom"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 680.0
+margin_right = 1016.0
+margin_bottom = 198.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Size Flags" ]
+
+[node name="Interaction" type="MarginContainer" parent="."]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Menu" type="MarginContainer" parent="."]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+

@@ -16,7 +16,25 @@ subdivide_depth = 0
 
 [node name="Cube1" type="MeshInstance" parent="."]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6.30878 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -6 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 1 )
+skeleton = NodePath("..")
+material/0 = null
+script = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Cube4" type="MeshInstance" parent="."]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -1, -6 )
 layers = 1
 material_override = null
 cast_shadow = 1
