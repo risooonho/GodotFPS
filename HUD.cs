@@ -1,23 +1,43 @@
 using Godot;
-using System;
 
 public class HUD : CanvasLayer
 {
-    // Member variables here, example:
-    // private int a = 2;
-    // private string b = "textvar";
+
+    private Control main;
+    private Control interaction;
+    private Control menu;
+
+    private float maxHealth = 100f;
+    private float maxStamina = 10f;
 
     public override void _Ready()
     {
-        // Called every time the node is added to the scene.
-        // Initialization here
-        
+        main = (Control)GetNode("Main");
+        interaction = (Control)GetNode("Interaction");
+        menu = (Control)GetNode("Menu");
     }
 
-//    public override void _Process(float delta)
-//    {
-//        // Called every frame. Delta is time since last frame.
-//        // Update game logic here.
-//        
-//    }
+    public void SetMaxHealth(float health)
+    {
+        this.maxHealth = health;
+    }
+
+    public void SetMaxStamina(float stamina)
+    {
+        this.maxStamina = stamina;
+    }
+
+    public void SetHealth(float health)
+    {
+        Control healthBar = ((Control)main.GetNode("VBoxContainer/Bottom/Centre/Health"));
+        healthBar.AnchorRight = health / maxHealth;
+        healthBar.MarginRight = 0;
+    }
+
+    public void SetStamina(float stamina)
+    {
+        Control staminaBar = ((Control)main.GetNode("VBoxContainer/Bottom/Centre/Stamina"));
+        staminaBar.AnchorRight = stamina / maxStamina;
+        staminaBar.MarginRight = 0;
+    }
 }

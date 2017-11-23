@@ -10,6 +10,8 @@ namespace CharacterState
     {
         private Character character;
 
+        private HUD hud;
+
         public AbstractMovementState movementState;
         public AbstractLeaningState leaningState;
         public AbstractInteractionState interactionState;
@@ -20,11 +22,15 @@ namespace CharacterState
         public bool wantsToCrouch = false;
         public bool wantsToRun = false;
 
-        public float stamina = 0f;
+        private float health = 100f;
+        private float stamina = 0f;
 
         public CharacterStateManager(Character character)
         {
             this.character = character;
+
+            hud = (HUD) character.GetNode("HUD");
+
             movementState = new StandingState(this);
             leaningState = new NoLeaningState(this);
             interactionState = new InteractionState(this);
@@ -47,6 +53,28 @@ namespace CharacterState
         public bool WantsToMove()
         {
             return movementVector.z != 0 || movementVector.x != 0;
+        }
+
+        public float GetStamina()
+        {
+            return stamina;
+        }
+
+        public void SetStamina(float stamina)
+        {
+            this.stamina = stamina;
+            hud.SetStamina(this.stamina);
+        }
+
+        public float GetHealth()
+        {
+            return health;
+        }
+
+        public void SetHealth(float health)
+        {
+            this.health = health;
+            hud.SetHealth(this.health);
         }
 
         public Vector3 ConsciousMovement(Vector3 movement)

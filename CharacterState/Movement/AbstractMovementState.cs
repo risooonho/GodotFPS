@@ -107,10 +107,10 @@ namespace CharacterState.Movement
 
         protected virtual void CalculateStamina(float dt)
         {
-            sharedState.stamina += dt;
-            if (sharedState.stamina > maxStamina)
+            sharedState.SetStamina(sharedState.GetStamina() + dt);
+            if (sharedState.GetStamina() > maxStamina)
             {
-                sharedState.stamina = maxStamina;
+                sharedState.SetStamina(maxStamina);
             }
         }
 

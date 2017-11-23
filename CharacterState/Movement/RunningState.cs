@@ -24,7 +24,7 @@ namespace CharacterState.Movement
         {
             base.PhysicsProcess(dt);
 
-            if (sharedState.stamina == 0)
+            if (sharedState.GetStamina() == 0)
             {
                 return new WalkingState(sharedState);
             }
@@ -45,10 +45,10 @@ namespace CharacterState.Movement
 
         protected override void CalculateStamina(float dt)
         {
-            sharedState.stamina -= dt;
-            if (sharedState.stamina < 0)
+            sharedState.SetStamina(sharedState.GetStamina() - dt);
+            if (sharedState.GetStamina() < 0)
             {
-                sharedState.stamina = 0;
+                sharedState.SetStamina(0);
             }
         }
     }

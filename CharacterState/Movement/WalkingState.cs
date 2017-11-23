@@ -35,7 +35,7 @@ namespace CharacterState.Movement
             {
                 return new StandingState(sharedState);
             }
-            else if (sharedState.wantsToRun && sharedState.stamina >= runningStaminaThreshold)
+            else if (sharedState.wantsToRun && sharedState.GetStamina() >= runningStaminaThreshold)
             {
                 return new RunningState(sharedState);
             }
