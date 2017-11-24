@@ -23,13 +23,10 @@ public class HUD : CanvasLayer
         Container compassContainer = (Container)main.GetNode("VBoxContainer/Top/CompassContainer");
         TextureRect compass = (TextureRect)main.GetNode("VBoxContainer/Top/CompassContainer/Compass");
 
-        Vector2 compassTextureSize = compass.RectSize;
-
         float northPos = (compassContainer.RectSize.x - compass.RectSize.x) / 2;
-        float offset = (degrees % 720) * (compass.RectSize.x / 1800);
-
-        Vector2 nextPosition = new Vector2(northPos + offset, compass.RectPosition.y);
-        compass.RectPosition = nextPosition;
+        float offset = (degrees % 360) * (compass.RectSize.x / 900); //Make sure degrees is between -360,360. 900 degrees are present in the texture
+        
+        compass.RectPosition = new Vector2(northPos + offset, compass.RectPosition.y);
     }
 
     public void SetMaxHealth(float health)
